@@ -1,0 +1,102 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ahara Helper",
+  "version": "5.1.6",
+  "description": "Karnataka Ahara FPS Automation & Quick Issue Helper v5.1.6",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "aharahelper@example.com",
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.karnataka.gov.in/*",
+    "*://ahara.karnataka.gov.in/*",
+    "*://*/shopowner_mserver/*",
+    "*://*/shopowner_bserver/*",
+    "*://*/shopowner_kserver/*",
+    "*://*/SHOPOWNER_MSERVER/*",
+    "*://*/SHOPOWNER_BSERVER/*",
+    "*://*/SHOPOWNER_KSERVER/*",
+    "*://*/FPS_EKYC_MSERVER/*",
+    "*://*/FPS_EKYC_BSERVER/*",
+    "*://*/FPS_EKYC_KSERVER/*",
+    "*://*/fps_ekyc_mserver/*",
+    "*://*/fps_ekyc_bserver/*",
+    "*://*/fps_ekyc_kserver/*",
+    "*://*/shopowner/*",
+    "*://*/ahara/*",
+    "https://aharahelper.vercel.app/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Ahara Helper v5.1.6",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.karnataka.gov.in/*",
+        "*://ahara.karnataka.gov.in/*",
+        "*://*/shopowner_mserver/*",
+        "*://*/shopowner_bserver/*",
+        "*://*/shopowner_kserver/*",
+        "*://*/SHOPOWNER_MSERVER/*",
+        "*://*/SHOPOWNER_BSERVER/*",
+        "*://*/SHOPOWNER_KSERVER/*",
+        "*://*/FPS_EKYC_MSERVER/*",
+        "*://*/FPS_EKYC_BSERVER/*",
+        "*://*/FPS_EKYC_KSERVER/*",
+        "*://*/fps_ekyc_mserver/*",
+        "*://*/fps_ekyc_bserver/*",
+        "*://*/fps_ekyc_kserver/*",
+        "*://*/shopowner/*",
+        "*://*/ahara/*"
+      ],
+      "js": [
+        "modules/rdFallback.js",
+        "modules/login.js",
+        "modules/mainmenu.js",
+        "modules/issue.js",
+        "modules/ekyc.js",
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "quick_issue.png",
+        "icon16.png",
+        "icon48.png",
+        "icon128.png"
+      ],
+      "matches": [
+        "*://*.karnataka.gov.in/*",
+        "*://*/*"
+      ]
+    }
+  ]
+}

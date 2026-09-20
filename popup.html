@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahara Helper</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- ── Header ─────────────────────────────────────────────────────────── -->
+    <header class="app-header">
+      <div class="logo-group">
+        <h1 class="app-logo">Ahara<span>Helper</span></h1>
+        <span class="version-tag">v5.1.6</span>
+      </div>
+      <button class="header-icon-btn" id="info-btn" title="About & Subscription Plans" aria-label="Open Information Modal">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8"  x2="12.01" y2="8"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- ── Hero Shield Power Button Section (Compact Ratio) ───────────────── -->
+    <section class="hero-section">
+      <div class="shield-container">
+        <div class="shield-glow"></div>
+        <div class="shield-layer outer-shield"></div>
+        <div class="shield-layer mid-shield"></div>
+        <div class="shield-layer inner-shield">
+          <svg viewBox="0 0 100 100" class="shield-svg">
+            <path d="M50,15 L80,25 C80,55 65,75 50,85 C35,75 20,55 20,25 Z" fill="none" stroke="rgba(59,130,246,0.2)" stroke-width="2"/>
+          </svg>
+        </div>
+        <button class="action-btn status-disconnected" id="action-btn" aria-label="Toggle Extension Helper">
+          <div class="button-ripple"></div>
+          <div class="button-inner">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+              <line x1="12" y1="2" x2="12" y2="12"></line>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- ── Status Info ─────────────────────────────────────────────────────── -->
+    <section class="status-section">
+      <div class="connection-status">
+        <span class="status-dot dot-disconnected" id="status-dot"></span>
+        <span class="status-text text-disconnected" id="status-text">HELPER DISABLED</span>
+      </div>
+    </section>
+
+    <!-- ── Minimal Core Form on Main Screen ────────────────────────────────── -->
+    <div class="main-form">
+
+      <!-- Mobile Number (Account Identity) -->
+      <div class="form-group">
+        <div class="label-row">
+          <label for="mobileNumber">MOBILE NUMBER</label>
+          <span class="label-badge">ACCOUNT ID</span>
+        </div>
+        <div class="input-wrapper">
+          <input type="tel" id="mobileNumber" placeholder="Enter 10-digit mobile" maxlength="10" autocomplete="off">
+          <span class="focus-border"></span>
+        </div>
+      </div>
+
+      <!-- Common RC Prefix -->
+      <div class="form-group">
+        <div class="label-row">
+          <label for="rcPrefix">COMMON RC PREFIX</label>
+        </div>
+        <div class="input-wrapper">
+          <input type="text" id="rcPrefix" placeholder="e.g. 540400 (or auto-detected)" maxlength="15">
+          <span class="focus-border"></span>
+        </div>
+      </div>
+
+      <!-- Subscription Status Card -->
+      <div class="form-group sub-status-card" id="sub-status-card">
+        <div class="sub-header-row">
+          <label>SUBSCRIPTION STATUS</label>
+          <a href="https://aharahelper.vercel.app/#pricing" target="_blank" id="renew-link" class="renew-link">
+            Renew →
+          </a>
+        </div>
+        <div class="sub-status-body">
+          <div class="sub-row">
+            <span class="sub-label">Status</span>
+            <span class="sub-val" id="sub-status-badge" data-state="unverified">Unverified</span>
+          </div>
+          <div class="sub-row">
+            <span class="sub-label">Plan</span>
+            <span class="sub-val" id="sub-plan-badge">—</span>
+          </div>
+          <div class="sub-row">
+            <span class="sub-label">Expires</span>
+            <span class="sub-val" id="sub-expiry-badge">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden checkbox to link with action-btn -->
+      <input type="checkbox" id="extensionEnabled" style="display:none;">
+
+      <!-- Save & Verify Button -->
+      <button id="saveButton" class="btn-primary">
+        <span>Save & Verify</span>
+        <div class="btn-glow"></div>
+      </button>
+
+      <!-- Success / Alert Toast -->
+      <div id="status" class="status-msg">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="status-msg-text">Settings saved & verified!</span>
+      </div>
+
+    </div><!-- /main-form -->
+
+    <!-- ── Subscription Blocked Banner ───────────────────────────────────── -->
+    <div class="sub-blocked-banner" id="sub-blocked-banner" style="display:none;">
+      <div class="sub-blocked-inner">
+        <div class="sub-blocked-icon">⚠️</div>
+        <div class="sub-blocked-content">
+          <p class="sub-blocked-title">Subscription Required</p>
+          <p class="sub-blocked-mobile" id="sub-blocked-mobile"></p>
+          <div class="sub-blocked-actions">
+            <a href="https://aharahelper.vercel.app/#pricing" target="_blank" class="sub-btn sub-btn-primary">View Plans</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Info Modal ─────────────────────────────────────────────────────── -->
+    <div class="modal" id="info-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Ahara Helper Info</h3>
+          <button class="close-btn" id="close-modal-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Automates Karnataka Ahara (FPS) — Mobile lock, 5-digit CAPTCHA instant submit, Same State, Bio Auth, Consent, Mantra device, and common prefix auto-fill.</p>
+          <div class="info-details">
+            <div class="info-row"><span class="info-label">Version</span><span class="info-val">5.1.6</span></div>
+            <div class="info-row"><span class="info-label">Auth</span><span class="info-val">Mobile Identity</span></div>
+            <div class="info-row"><span class="info-label">Support</span><span class="info-val">aharahelper.vercel.app</span></div>
+          </div>
+
+          <div class="plans-section">
+            <p class="plans-title">Subscription Plans</p>
+            <div class="plans-grid">
+              <div class="plan-chip"><span class="plan-name">Trial</span><span class="plan-detail">₹0 · 3d</span></div>
+              <div class="plan-chip"><span class="plan-name">Micro</span><span class="plan-detail">₹119 · 30d</span></div>
+              <div class="plan-chip"><span class="plan-name">Small</span><span class="plan-detail">₹349 · 90d</span></div>
+              <div class="plan-chip"><span class="plan-name">Medium</span><span class="plan-detail">₹599 · 180d</span></div>
+              <div class="plan-chip plan-chip-popular"><span class="plan-name">Large ⭐</span><span class="plan-detail">₹1099 · 365d</span></div>
+            </div>
+            <a href="https://aharahelper.vercel.app/#pricing" target="_blank" class="modal-pricing-link">View All Plans →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+  </div><!-- /app-container -->
+
+  <script src="popup.js"></script>
+</body>
+</html>
